@@ -77,8 +77,9 @@ class DatabaseConnection
         $db = NULL;
     }
 
-    function setLoginAttempts($username) {
-        mysqli_query($this->connection,"UPDATE user SET login_attempts = login_attempts + 1 WHERE AbhyasiID = '$username';");
+    function setLoginAttempts($username)
+    {
+        mysqli_query($this->connection, "UPDATE user SET login_attempts = login_attempts + 1 WHERE AbhyasiID = '$username';");
     }
 
     function getLoginAttempts($username)
@@ -92,9 +93,10 @@ class DatabaseConnection
         return $max;
     }
 
-    function deactiveUser($username) {
+    function deactiveUser($username)
+    {
 
-        mysqli_query($this->connection,"UPDATE user SET ActiveStatus = 'off' WHERE AbhyasiID = '$username';");
+        mysqli_query($this->connection, "UPDATE user SET ActiveStatus = 'off' WHERE AbhyasiID = '$username';");
     }
 
 
@@ -141,15 +143,15 @@ class DatabaseConnection
     function getParentType($type)
     {
 
-        if($type=='LBox' || $type=='LFile' || $type == 'Letter')
+        if ($type == 'LBox' || $type == 'LFile' || $type == 'Letter')
             return 'LBox';
-        else if($type=='Audio' || $type=='ATrack')
+        else if ($type == 'Audio' || $type == 'ATrack')
             return 'Audio';
-        else if($type=='Video' || $type=='VTrack')
+        else if ($type == 'Video' || $type == 'VTrack')
             return 'Video';
-        else if($type=='PhotoBox' || $type=='Photos')
+        else if ($type == 'PhotoBox' || $type == 'Photos')
             return 'PhotoBox';
-        else if($type=='BBox' || $type=='Book' || $type=='Brochure' || $type=='Souvenir')
+        else if ($type == 'BBox' || $type == 'Book' || $type == 'Brochure' || $type == 'Souvenir')
             return 'BBox';
     }
 
@@ -510,6 +512,19 @@ class DatabaseConnection
             }
         }
         return $code;
+    }
+
+    function getAllUser()
+    {
+        $sql = "select * from `user`";
+        $result = mysqli_query($this->connection, $sql);
+
+        $row = array();
+        while ($r = $result->fetch_assoc()) {
+            $row[] = $r;
+        }
+
+        return json_encode($row);
     }
 }
 
